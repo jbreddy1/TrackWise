@@ -5,11 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getExpenses, addExpense, deleteExpense, updateExpense } from "@/lib/storage";
+import { getExpenses, addExpense, deleteExpense, updateExpense, getUser } from "@/lib/storage";
 import { Expense, ExpenseCategory } from "@/types/expense";
 import { Plus, Trash2, Edit } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
+import { formatCurrency } from "@/lib/currency";
+import { updateStreak } from "@/lib/gamification";
 import {
   Dialog,
   DialogContent,
@@ -63,6 +65,8 @@ const Expenses = () => {
       return;
     }
 
+    const user = getUser();
+
     if (editingExpense) {
       updateExpense(editingExpense.id, {
         ...formData,
@@ -80,6 +84,7 @@ const Expenses = () => {
         createdAt: new Date().toISOString(),
       };
       addExpense(newExpense);
+      updateStreak(user?.id);
       toast({
         title: "Expense added",
         description: "Your expense has been recorded",
@@ -163,7 +168,7 @@ const Expenses = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="amount">Amount ($)</Label>
+                  <Label htmlFor="amount">Amount (USD)</Label>
                   <Input
                     id="amount"
                     type="number"
@@ -172,6 +177,7 @@ const Expenses = () => {
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                     placeholder="0.00"
                   />
+                  <p className="text-xs text-muted-foreground">Will be converted to INR (₹{formData.amount ? (parseFloat(formData.amount) * 83.5).toFixed(2) : '0.00'})</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
@@ -258,7 +264,7 @@ const Expenses = () => {
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-xl font-bold text-destructive">
-                        ${expense.amount.toFixed(2)}
+                        {formatCurrency(expense.amount)}
                       </span>
                       <div className="flex gap-2">
                         <Button

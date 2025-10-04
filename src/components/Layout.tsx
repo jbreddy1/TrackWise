@@ -9,7 +9,8 @@ import {
   BarChart3, 
   Menu, 
   LogOut,
-  Wallet
+  Wallet,
+  Trophy
 } from "lucide-react";
 import { clearUser, getUser } from "@/lib/storage";
 import { useToast } from "@/hooks/use-toast";
@@ -31,6 +32,7 @@ const Layout = ({ children }: LayoutProps) => {
       title: "Logged out",
       description: "See you soon!",
     });
+    window.dispatchEvent(new Event('auth-change'));
     navigate("/auth");
   };
 
@@ -39,6 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
     { icon: Receipt, label: "Expenses", path: "/expenses" },
     { icon: Target, label: "Budget", path: "/budget" },
     { icon: BarChart3, label: "Analytics", path: "/analytics" },
+    { icon: Trophy, label: "Rewards", path: "/rewards" },
   ];
 
   const NavLinks = () => (

@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Expenses from "./pages/Expenses";
 import Budget from "./pages/Budget";
 import Analytics from "./pages/Analytics";
+import Rewards from "./pages/Rewards";
 import NotFound from "./pages/NotFound";
 import { getUser } from "./lib/storage";
 
@@ -70,6 +71,10 @@ const App = () => {
             <Route 
               path="/analytics" 
               element={isAuthenticated ? <Analytics /> : <Navigate to="/auth" />} 
+            />
+            <Route 
+              path="/rewards" 
+              element={isAuthenticated ? <Rewards /> : <Navigate to="/auth" />} 
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

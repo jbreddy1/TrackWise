@@ -10,6 +10,7 @@ import type { Budget as BudgetType, ExpenseCategory } from "@/types/expense";
 import { Plus, Trash2, TrendingUp, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
+import { formatCurrency } from "@/lib/currency";
 import {
   Dialog,
   DialogContent,
@@ -150,7 +151,7 @@ const Budget = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="limit">Budget Limit ($)</Label>
+                  <Label htmlFor="limit">Budget Limit (USD)</Label>
                   <Input
                     id="limit"
                     type="number"
@@ -159,6 +160,7 @@ const Budget = () => {
                     onChange={(e) => setFormData({ ...formData, limit: e.target.value })}
                     placeholder="0.00"
                   />
+                  <p className="text-xs text-muted-foreground">Will be converted to INR (₹{formData.limit ? (parseFloat(formData.limit) * 83.5).toFixed(2) : '0.00'})</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="period">Period</Label>
@@ -228,7 +230,7 @@ const Budget = () => {
                       <div className="flex justify-between mb-2">
                         <span className="text-sm text-muted-foreground">Spent</span>
                         <span className={`text-sm font-semibold ${getProgressColor(percentage)}`}>
-                          ${budget.spent.toFixed(2)} / ${budget.limit.toFixed(2)}
+                          {formatCurrency(budget.spent)} / {formatCurrency(budget.limit)}
                         </span>
                       </div>
                       <Progress 
@@ -241,13 +243,13 @@ const Budget = () => {
                         {percentage.toFixed(0)}%
                       </span>
                       <span className="text-sm text-muted-foreground">
-                        ${(budget.limit - budget.spent).toFixed(2)} remaining
+                        {formatCurrency(budget.limit - budget.spent)} remaining
                       </span>
                     </div>
                     {isOverBudget && (
                       <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
                         <p className="text-sm text-destructive font-medium">
-                          Over budget by ${(budget.spent - budget.limit).toFixed(2)}
+                          Over budget by {formatCurrency(budget.spent - budget.limit)}
                         </p>
                       </div>
                     )}

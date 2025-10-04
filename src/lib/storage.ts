@@ -4,6 +4,13 @@ const STORAGE_KEYS = {
   USER: "trackwise_user",
   EXPENSES: "trackwise_expenses",
   BUDGETS: "trackwise_budgets",
+  EMERGENCY_FUND: "trackwise_emergency_fund",
+  GAMIFICATION: "trackwise_gamification",
+};
+
+const getUserKey = (baseKey: string, userId?: string): string => {
+  const currentUserId = userId || getUser()?.id;
+  return currentUserId ? `${baseKey}_${currentUserId}` : baseKey;
 };
 
 // User Storage
@@ -22,11 +29,11 @@ export const clearUser = () => {
 
 // Expenses Storage
 export const saveExpenses = (expenses: Expense[]) => {
-  localStorage.setItem(STORAGE_KEYS.EXPENSES, JSON.stringify(expenses));
+  localStorage.setItem(getUserKey(STORAGE_KEYS.EXPENSES), JSON.stringify(expenses));
 };
 
 export const getExpenses = (): Expense[] => {
-  const expenses = localStorage.getItem(STORAGE_KEYS.EXPENSES);
+  const expenses = localStorage.getItem(getUserKey(STORAGE_KEYS.EXPENSES));
   return expenses ? JSON.parse(expenses) : [];
 };
 
@@ -52,11 +59,11 @@ export const deleteExpense = (id: string) => {
 
 // Budgets Storage
 export const saveBudgets = (budgets: Budget[]) => {
-  localStorage.setItem(STORAGE_KEYS.BUDGETS, JSON.stringify(budgets));
+  localStorage.setItem(getUserKey(STORAGE_KEYS.BUDGETS), JSON.stringify(budgets));
 };
 
 export const getBudgets = (): Budget[] => {
-  const budgets = localStorage.getItem(STORAGE_KEYS.BUDGETS);
+  const budgets = localStorage.getItem(getUserKey(STORAGE_KEYS.BUDGETS));
   return budgets ? JSON.parse(budgets) : [];
 };
 

@@ -6,6 +6,7 @@ import { getExpenses, getBudgets } from "@/lib/storage";
 import { Expense, Budget } from "@/types/expense";
 import { TrendingUp, TrendingDown, Wallet, Target, Plus, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
+import { formatCurrency } from "@/lib/currency";
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -47,7 +48,7 @@ const Dashboard = () => {
               <Wallet className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
+              <div className="text-2xl font-bold">{formatCurrency(totalExpenses)}</div>
               <p className="text-xs text-muted-foreground mt-1">All time</p>
             </CardContent>
           </Card>
@@ -60,7 +61,7 @@ const Dashboard = () => {
               <TrendingUp className="h-4 w-4 text-success" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${thisMonthExpenses.toFixed(2)}</div>
+              <div className="text-2xl font-bold">{formatCurrency(thisMonthExpenses)}</div>
               <p className="text-xs text-muted-foreground mt-1">Current month spending</p>
             </CardContent>
           </Card>
@@ -75,7 +76,7 @@ const Dashboard = () => {
             <CardContent>
               <div className="text-2xl font-bold">{budgetProgress.toFixed(0)}%</div>
               <p className="text-xs text-muted-foreground mt-1">
-                ${thisMonthExpenses.toFixed(2)} of ${totalBudget.toFixed(2)}
+                {formatCurrency(thisMonthExpenses)} of {formatCurrency(totalBudget)}
               </p>
             </CardContent>
           </Card>
@@ -146,7 +147,7 @@ const Dashboard = () => {
                         <p className="text-xs text-muted-foreground">{expense.category}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-destructive">${expense.amount.toFixed(2)}</p>
+                        <p className="font-bold text-destructive">{formatCurrency(expense.amount)}</p>
                         <p className="text-xs text-muted-foreground">
                           {new Date(expense.date).toLocaleDateString()}
                         </p>

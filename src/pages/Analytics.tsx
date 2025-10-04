@@ -5,6 +5,7 @@ import { Expense } from "@/types/expense";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import Layout from "@/components/Layout";
 import { BarChart3 } from "lucide-react";
+import { formatCurrency } from "@/lib/currency";
 
 const COLORS = [
   "hsl(200 95% 45%)",  // Primary
@@ -84,7 +85,7 @@ const Analytics = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">${totalSpent.toFixed(2)}</p>
+              <p className="text-3xl font-bold">{formatCurrency(totalSpent)}</p>
             </CardContent>
           </Card>
           <Card className="shadow-soft">
@@ -104,7 +105,7 @@ const Analytics = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">${avgTransaction.toFixed(2)}</p>
+              <p className="text-3xl font-bold">{formatCurrency(avgTransaction)}</p>
             </CardContent>
           </Card>
         </div>
@@ -144,7 +145,7 @@ const Analytics = () => {
                           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
                     </PieChart>
                   </ResponsiveContainer>
                 </CardContent>
@@ -160,7 +161,7 @@ const Analytics = () => {
                     <BarChart data={monthlyData}>
                       <XAxis dataKey="name" />
                       <YAxis />
-                      <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
                       <Legend />
                       <Bar dataKey="amount" fill="hsl(200 95% 45%)" name="Spent" />
                     </BarChart>
@@ -193,7 +194,7 @@ const Analytics = () => {
                               {percentage.toFixed(1)}% of total
                             </p>
                           </div>
-                          <p className="text-lg font-bold">${cat.value.toFixed(2)}</p>
+                          <p className="text-lg font-bold">{formatCurrency(cat.value)}</p>
                         </div>
                       );
                     })}
