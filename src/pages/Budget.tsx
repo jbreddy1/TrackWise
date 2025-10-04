@@ -151,7 +151,7 @@ const Budget = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="limit">Budget Limit (USD)</Label>
+                  <Label htmlFor="limit">Budget Limit (₹)</Label>
                   <Input
                     id="limit"
                     type="number"
