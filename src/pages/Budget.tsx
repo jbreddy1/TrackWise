@@ -160,7 +160,6 @@ const Budget = () => {
                     onChange={(e) => setFormData({ ...formData, limit: e.target.value })}
                     placeholder="0.00"
                   />
-                  <p className="text-xs text-muted-foreground">Will be converted to INR (₹{formData.limit ? (parseFloat(formData.limit) * 83.5).toFixed(2) : '0.00'})</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="period">Period</Label>

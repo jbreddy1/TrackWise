@@ -177,7 +177,6 @@ const Expenses = () => {
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                     placeholder="0.00"
                   />
-                  <p className="text-xs text-muted-foreground">Will be converted to INR (₹{formData.amount ? (parseFloat(formData.amount) * 83.5).toFixed(2) : '0.00'})</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
