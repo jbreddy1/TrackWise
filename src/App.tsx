@@ -18,8 +18,22 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const user = getUser();
-    setIsAuthenticated(!!user);
+    const checkAuth = () => {
+      const user = getUser();
+      setIsAuthenticated(!!user);
+    };
+
+    checkAuth();
+
+    // Listen for storage changes from login/logout
+    window.addEventListener('storage', checkAuth);
+    // Listen for custom auth event
+    window.addEventListener('auth-change', checkAuth);
+
+    return () => {
+      window.removeEventListener('storage', checkAuth);
+      window.removeEventListener('auth-change', checkAuth);
+    };
   }, []);
 
   if (isAuthenticated === null) {

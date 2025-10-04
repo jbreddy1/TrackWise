@@ -31,6 +31,7 @@ const Auth = () => {
           title: "Welcome back!",
           description: "You've successfully logged in.",
         });
+        window.dispatchEvent(new Event('auth-change'));
         navigate("/dashboard");
       } else {
         toast({
@@ -51,6 +52,7 @@ const Auth = () => {
           title: "Account created!",
           description: "Welcome to TrackWise.",
         });
+        window.dispatchEvent(new Event('auth-change'));
         navigate("/dashboard");
       } else {
         toast({
